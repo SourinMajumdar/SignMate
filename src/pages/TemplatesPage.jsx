@@ -1,0 +1,196 @@
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+const TEMPLATES = [
+  {
+    id: "classic",
+    name: "Classic",
+    label: "Traditional & bold",
+    desc: "The standard professional look. Name prominent at the top with clearly separated contact rows.",
+    color: "#2563eb",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.7 }}>
+        <strong style={{ color, display: "block", fontSize: 15 }}>
+          Sarah Chen
+        </strong>
+        <span style={{ color: "#64748b", display: "block" }}>
+          Senior Designer
+        </span>
+        <span style={{ color: "#64748b", display: "block" }}>
+          Acme Corporation
+        </span>
+        <div
+          style={{ height: 1, background: color + "30", margin: "8px 0" }}
+        />
+        <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
+        <div style={{ color: "#64748b" }}>✉️ sarah@acmecorp.com</div>
+        <div style={{ color }}>🌐 acmecorp.com</div>
+      </div>
+    ),
+  },
+  {
+    id: "compact",
+    name: "Compact",
+    label: "All in one row",
+    desc: "Efficient and concise. Fits everything on a couple of clean lines.",
+    color: "#16a34a",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.7 }}>
+        <div>
+          <strong style={{ color }}>Sarah Chen</strong>
+          <span style={{ color: "#64748b" }}> · Senior Designer · Acme</span>
+        </div>
+        <div style={{ color: "#64748b" }}>
+          📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
+        </div>
+        <div style={{ color }}>🌐 acmecorp.com</div>
+      </div>
+    ),
+  },
+  {
+    id: "minimal",
+    name: "Minimal",
+    label: "Clean & simple",
+    desc: "Maximum whitespace, minimal content. Best for design‑forward professionals.",
+    color: "#9333ea",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.7 }}>
+        <strong style={{ color, display: "block", fontSize: 15 }}>
+          Sarah Chen
+        </strong>
+        <span style={{ color: "#64748b", display: "block" }}>
+          Senior Designer — Acme Corporation
+        </span>
+        <div style={{ color: "#64748b", marginTop: 6 }}>
+          ✉️ sarah@acmecorp.com | 🌐 acmecorp.com
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "inline",
+    name: "Inline",
+    label: "Horizontal flow",
+    desc: "Everything on a single line. Ultra‑compact for short signature requirements.",
+    color: "#ea580c",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.7 }}>
+        <div style={{ color: "#64748b" }}>
+          <strong style={{ color }}>Sarah Chen</strong>
+          {" | Senior Designer | Acme Corp"}
+        </div>
+        <div style={{ color: "#64748b" }}>
+          {"📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com"}
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: "card",
+    name: "Card",
+    label: "Boxed with border",
+    desc: "Visually distinct bordered card layout. Stands out in any inbox.",
+    color: "#0891b2",
+    preview: (color) => (
+      <table
+        cellPadding="5"
+        cellSpacing="0"
+        style={{
+          fontFamily: "Arial",
+          fontSize: 13,
+          border: "1px solid #e2e8f0",
+          width: "100%",
+        }}
+      >
+        <tbody>
+          <tr>
+            <td>
+              <strong style={{ color, fontSize: 15 }}>Sarah Chen</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style={{ color: "#64748b" }}>Senior Designer</td>
+          </tr>
+          <tr>
+            <td style={{ color: "#64748b" }}>Acme Corporation</td>
+          </tr>
+          <tr>
+            <td style={{ color: "#64748b" }}>
+              📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ),
+  },
+];
+
+export default function TemplatesPage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen bg-bg-base">
+      <Navbar />
+      <div className="pt-28 pb-20">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-base font-bold px-6 py-3 rounded-full mb-6">
+              5 templates available
+            </div>
+            <h1 className="text-6xl font-extrabold text-text-base tracking-tight mb-5">
+              Template Gallery
+            </h1>
+            <p className="text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
+              Choose a starting point and customize colors, info, and social
+              links in the builder.
+            </p>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {TEMPLATES.map(({ id, name, label, desc, color, preview }, i) => (
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+                className="bg-surface rounded-2xl border border-border-base p-8 flex flex-col gap-6"
+              >
+                <div>
+                  <span className="text-xs font-bold text-text-muted uppercase tracking-widest">
+                    {label}
+                  </span>
+                  <h2 className="text-2xl font-extrabold text-text-base mt-2 mb-2">
+                    {name}
+                  </h2>
+                  <p className="text-text-muted leading-relaxed">
+                    {desc}
+                  </p>
+                </div>
+
+                {/* Preview */}
+                <div className="bg-bg-base rounded-xl border border-border-base p-6 flex-1">
+                  {preview(color)}
+                </div>
+
+                <button
+                  onClick={() => navigate(`/builder?template=${id}`)}
+                  className="w-full flex items-center justify-center gap-2 font-semibold text-white rounded-xl py-3.5 transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: color }}
+                >
+                  Use This Template
+                  <ArrowRight size={16} />
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
