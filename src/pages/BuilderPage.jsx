@@ -18,22 +18,22 @@ export default function BuilderPage() {
   return (
     <div className="min-h-screen bg-bg-base">
       <Navbar />
-      <div className="pt-24 h-screen flex flex-col">
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-4 w-full">
-          <h1 className="text-3xl font-extrabold text-text-base tracking-tight">
+      <div className="pt-24 lg:h-screen lg:flex lg:flex-col">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-4 w-full">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-text-base tracking-tight">
             Signature Builder
           </h1>
-          <p className="text-text-muted mt-1">
+          <p className="text-text-muted mt-1 text-sm sm:text-base">
             Customize your signature and copy the HTML in one click.
           </p>
         </div>
 
-        <div className="flex-1 overflow-hidden max-w-7xl mx-auto px-6 pb-6 w-full relative">
+        <div className="lg:flex-1 lg:overflow-hidden max-w-7xl mx-auto px-4 sm:px-6 pb-6 w-full relative">
           <AnimatePresence mode="wait">
             {loading ? (
               <motion.div
                 key="skeleton"
-                className="absolute inset-0 px-0 pb-6"
+                className="lg:absolute lg:inset-0 px-0 pb-6"
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
@@ -43,7 +43,7 @@ export default function BuilderPage() {
             ) : (
               <motion.div
                 key="builder"
-                className="h-full"
+                className="lg:h-full"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}

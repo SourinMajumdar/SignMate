@@ -62,7 +62,7 @@ export default function Footer() {
             </div>
 
             <a
-              href="https://github.com"
+              href="https://github.com/SourinMajumdar/SignMate"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-base text-text-muted hover:text-text-base transition-colors"

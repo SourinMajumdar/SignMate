@@ -20,24 +20,18 @@ function applyTheme({ primary, dark, light }) {
 
 function MockSignatureCard({ color }) {
   return (
-    <div className="bg-surface rounded-2xl border border-border-base p-8 w-96">
+    <div className="bg-surface rounded-2xl border border-border-base p-6 sm:p-8 w-full max-w-sm">
       <div className="flex items-start gap-4">
         <div
-          className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl shrink-0"
-          style={{
-            background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-          }}
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white font-bold text-xl sm:text-2xl shrink-0"
+          style={{ background: `linear-gradient(135deg, ${color}, ${color}cc)` }}
         >
           SC
         </div>
         <div>
-          <p className="font-bold text-lg text-primary leading-tight">
-            Sarah Chen
-          </p>
+          <p className="font-bold text-base sm:text-lg text-primary leading-tight">Sarah Chen</p>
           <p className="text-text-muted text-sm mt-0.5">Senior Designer</p>
-          <p className="text-text-muted text-sm font-semibold">
-            Acme Corporation
-          </p>
+          <p className="text-text-muted text-sm font-semibold">Acme Corporation</p>
         </div>
       </div>
 
@@ -79,7 +73,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="min-h-screen bg-bg-base dot-grid flex items-center pt-28 pb-20 relative overflow-hidden">
+    <section className="min-h-screen bg-bg-base dot-grid flex items-center pt-24 sm:pt-28 pb-16 sm:pb-20 relative overflow-hidden">
       {/* Decorative blur blob */}
       <div
         className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-30 pointer-events-none"
@@ -89,20 +83,20 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 w-full relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2.5 bg-primary-light text-primary text-sm font-bold px-5 py-2.5 rounded-full mb-7 border border-primary/20">
+            <div className="inline-flex items-center gap-2.5 bg-primary-light text-primary text-sm font-bold px-5 py-2.5 rounded-full mb-6 border border-primary/20">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               Free · No signup required
             </div>
 
-            <h1 className="text-6xl lg:text-7xl font-extrabold text-text-base leading-[1.08] tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-text-base leading-[1.08] tracking-tight mb-5">
               Create Your
               <br />
               <span className="text-primary">Email Signature</span>
@@ -110,29 +104,28 @@ export default function HeroSection() {
               in Seconds
             </h1>
 
-            <p className="text-xl text-text-muted leading-relaxed mb-10 max-w-lg">
-              Custom templates, brand colors, social links, and instant HTML
-              export.
+            <p className="text-base sm:text-xl text-text-muted leading-relaxed mb-8 sm:mb-10 max-w-lg">
+              Custom templates, brand colors, social links, and instant HTML export.
             </p>
 
-            <div className="flex flex-wrap gap-3 mb-14">
+            <div className="flex flex-wrap gap-3 mb-10 sm:mb-14">
               <Link
                 to="/builder"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-7 py-3.5 rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl transition-colors text-sm sm:text-base"
               >
                 Start Building
                 <ArrowRight size={15} />
               </Link>
               <Link
                 to="/templates"
-                className="inline-flex items-center gap-2 bg-surface hover:bg-bg-base text-text-base font-semibold px-7 py-3.5 rounded-xl border border-border-base transition-colors"
+                className="inline-flex items-center gap-2 bg-surface hover:bg-bg-base text-text-base font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl border border-border-base transition-colors text-sm sm:text-base"
               >
                 View Templates
               </Link>
             </div>
 
             {/* Trust strip */}
-            <div className="flex flex-wrap items-center gap-6 text-text-muted text-xs font-medium">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-text-muted text-xs font-medium">
               {["Works with Gmail", "Outlook ready", "5 templates"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
@@ -147,9 +140,9 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-col items-center lg:items-end gap-14"
+            className="flex flex-col items-center gap-10 sm:gap-14"
           >
-            <div className="relative">
+            <div className="relative w-full max-w-sm mx-auto">
               {/* Depth layers */}
               <div className="absolute inset-0 translate-x-5 translate-y-5 bg-primary/5 rounded-2xl border border-primary/10" />
               <div className="absolute inset-0 translate-x-2.5 translate-y-2.5 bg-primary/8 rounded-2xl border border-primary/10" />
@@ -167,7 +160,7 @@ export default function HeroSection() {
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-                className="absolute -top-4 -right-4 bg-surface rounded-xl border border-border-base shadow-sm px-3 py-2 text-xs font-semibold text-text-base flex items-center gap-1.5"
+                className="absolute -top-4 -right-2 sm:-right-4 bg-surface rounded-xl border border-border-base shadow-sm px-3 py-2 text-xs font-semibold text-text-base flex items-center gap-1.5"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                 Live Preview
@@ -177,7 +170,7 @@ export default function HeroSection() {
               <motion.div
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-                className="absolute -bottom-4 -left-6 bg-surface rounded-xl border border-border-base shadow-sm px-3 py-2 text-xs font-semibold text-text-base"
+                className="absolute -bottom-4 -left-2 sm:-left-6 bg-surface rounded-xl border border-border-base shadow-sm px-3 py-2 text-xs font-semibold text-text-base"
               >
                 {"</>"} HTML Export
               </motion.div>

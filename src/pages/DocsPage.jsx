@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Zap, Palette, Copy, ShieldOff } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
 
 const STEPS = [
   { step: "01", title: "Open the Builder", desc: "Head to the Builder page. No account or login needed — it's ready instantly." },
@@ -40,7 +41,15 @@ const FAQS = [
   { q: "Is my data stored anywhere?", a: "No. Everything stays in your browser — nothing is sent to a server." },
 ];
 
+const OVERVIEW_FEATURES = [
+  { icon: Zap,      label: "Instant generation", desc: "Create a signature in under a minute — no design skills needed." },
+  { icon: Palette,  label: "5 templates & custom color", desc: "Choose a layout and brand color that fits your style." },
+  { icon: Copy,     label: "Copy-ready HTML", desc: "Get clean HTML that drops straight into any email client." },
+  { icon: ShieldOff, label: "Fully private", desc: "No data is sent to any server. Everything stays in your browser." },
+];
+
 const NAV_ITEMS = [
+  { href: "#overview",        label: "What is SignMate?" },
   { href: "#getting-started", label: "Getting Started" },
   { href: "#templates",       label: "Templates" },
   { href: "#email-clients",   label: "Email Clients" },
@@ -50,8 +59,8 @@ const NAV_ITEMS = [
 
 function Section({ id, title, children }) {
   return (
-    <section id={id} className="mb-20 scroll-mt-28">
-      <h2 className="text-3xl font-extrabold text-text-base mb-8 pb-4 border-b border-border-base tracking-tight">
+    <section id={id} className="mb-12 sm:mb-20 scroll-mt-28">
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-text-base mb-5 sm:mb-8 pb-4 border-b border-border-base tracking-tight">
         {title}
       </h2>
       {children}
@@ -80,16 +89,17 @@ export default function DocsPage() {
   return (
     <div className="min-h-screen bg-bg-base">
       <Navbar />
-      <div className="pt-28 pb-20 max-w-7xl mx-auto px-6">
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Page header */}
-        <div className="mb-14">
-          <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-sm font-bold px-4 py-2 rounded-full mb-6">
+        <div className="mb-8 sm:mb-14">
+          <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-sm font-bold px-4 py-2 rounded-full mb-5 sm:mb-6">
             Documentation
           </div>
-          <h1 className="text-6xl font-extrabold text-text-base tracking-tight mb-5 leading-tight">
-            How to Use SignMate
+          <h1 className="flex items-center gap-3 text-3xl sm:text-5xl lg:text-6xl font-extrabold text-text-base tracking-tight mb-4 sm:mb-5 leading-tight">
+            About
+            <span className="gradient-text">SignMate</span>
           </h1>
-          <p className="text-xl text-text-muted leading-relaxed max-w-2xl">
+          <p className="text-base sm:text-xl text-text-muted leading-relaxed max-w-2xl">
             Everything you need to create, customize, and export your professional email signature.
           </p>
         </div>
@@ -133,6 +143,32 @@ export default function DocsPage() {
 
           {/* Main content */}
           <div className="flex-1 min-w-0">
+
+            {/* Overview */}
+            <Section id="overview" title="What is SignMate?">
+              <p className="text-text-muted leading-relaxed text-lg mb-8">
+                <strong className="text-text-base">SignMate</strong> is a free, browser-based email signature generator.
+                Fill in your details, pick a template and brand color, then copy the resulting HTML directly into
+                Gmail, Outlook, or Apple Mail — no account, no subscription, and no data ever leaves your browser.
+              </p>
+              <p className="text-text-muted leading-relaxed mb-10">
+                It's built for professionals, freelancers, and teams who want a polished, consistent email signature
+                without the overhead of a design tool or a paid service.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {OVERVIEW_FEATURES.map(({ icon: Icon, label, desc }) => (
+                  <div key={label} className="bg-surface rounded-2xl border border-border-base p-6 flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-xl bg-primary-light flex items-center justify-center shrink-0">
+                      <Icon size={18} className="text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-text-base mb-1">{label}</p>
+                      <p className="text-text-muted text-sm leading-relaxed">{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
 
             {/* Getting Started */}
             <Section id="getting-started" title="Getting Started">
@@ -218,6 +254,7 @@ export default function DocsPage() {
         </div>
       </div>
       <Footer />
+      <BackToTop />
     </div>
   );
 }

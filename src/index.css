@@ -15,6 +15,16 @@
   --color-border-base: #e2e8f0;
 }
 
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @layer base {
   * {
     box-sizing: border-box;

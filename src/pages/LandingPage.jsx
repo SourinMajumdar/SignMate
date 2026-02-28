@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import BackToTop from "../components/BackToTop";
 import HeroSection from "../components/HeroSection";
 import WhatItDoes from "../components/WhatItDoes";
 import FeatureSection from "../components/FeatureSection";
@@ -16,6 +17,7 @@ export default function LandingPage() {
       <TemplateCarousel />
       <CTABanner />
       <Footer />
+      <BackToTop />
     </div>
   );
 }

@@ -178,14 +178,14 @@ export default function TemplateCarousel() {
   const translateX = cardWidth ? -index * (cardWidth + GAP) : 0;
 
   return (
-    <section className="py-32 bg-surface overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-16 sm:py-24 lg:py-32 bg-surface overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header — centered */}
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-extrabold text-text-base mb-3 tracking-tight">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text-base mb-3 tracking-tight">
             Choose Your Template
           </h2>
-          <p className="text-lg text-text-muted">
+          <p className="text-base sm:text-lg text-text-muted">
             5 professional designs, ready to customize with your brand.
           </p>
         </div>

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import BackToTop from "../components/BackToTop";
+
 
 const TEMPLATES = [
   {
@@ -134,31 +136,31 @@ export default function TemplatesPage() {
   return (
     <div className="min-h-screen bg-bg-base">
       <Navbar />
-      <div className="pt-28 pb-20">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-base font-bold px-6 py-3 rounded-full mb-6">
+          <div className="text-center mb-8 sm:mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-sm font-bold px-5 py-2.5 rounded-full mb-5 sm:mb-6">
               5 templates available
             </div>
-            <h1 className="text-6xl font-extrabold text-text-base tracking-tight mb-5">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-text-base tracking-tight mb-4 sm:mb-5">
               Template Gallery
             </h1>
-            <p className="text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-text-muted max-w-xl mx-auto leading-relaxed">
               Choose a starting point and customize colors, info, and social
               links in the builder.
             </p>
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
             {TEMPLATES.map(({ id, name, label, desc, color, preview }, i) => (
               <motion.div
                 key={id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
-                className="bg-surface rounded-2xl border border-border-base p-8 flex flex-col gap-6"
+                className="bg-surface rounded-2xl border border-border-base p-6 sm:p-8 flex flex-col gap-5 sm:gap-6"
               >
                 <div>
                   <span className="text-xs font-bold text-text-muted uppercase tracking-widest">
@@ -191,6 +193,7 @@ export default function TemplatesPage() {
         </div>
       </div>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
