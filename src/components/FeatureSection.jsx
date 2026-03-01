@@ -11,13 +11,13 @@ const FEATURES = [
   {
     icon: LayoutGrid,
     title: "Multiple Templates",
-    desc: "5 professionally crafted templates — classic, compact, minimal, inline, and card.",
+    desc: "6 professionally crafted templates — classic, compact, minimal, inline, card, and modern.",
     accent: "#9333ea",
   },
   {
     icon: Download,
     title: "One-Click Export",
-    desc: "Copy clean, email-client–compatible HTML instantly and paste anywhere.",
+    desc: "Copy your rendered signature and paste it directly into Gmail, Outlook, or Apple Mail.",
     accent: "#16a34a",
   },
 ];

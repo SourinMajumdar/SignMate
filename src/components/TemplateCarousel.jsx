@@ -22,7 +22,6 @@ const TEMPLATES = [
         </span>
         <div style={{ height: 1, background: color + "30", margin: "8px 0" }} />
         <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
-        <div style={{ color: "#64748b" }}>✉️ sarah@acmecorp.com</div>
         <div style={{ color }}>🌐 acmecorp.com</div>
       </div>
     ),
@@ -38,9 +37,7 @@ const TEMPLATES = [
           <strong style={{ color }}>Sarah Chen</strong>
           <span style={{ color: "#64748b" }}> · Senior Designer · Acme</span>
         </div>
-        <div style={{ color: "#64748b" }}>
-          📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
-        </div>
+        <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
         <div style={{ color }}>🌐 acmecorp.com</div>
       </div>
     ),
@@ -58,9 +55,7 @@ const TEMPLATES = [
         <span style={{ color: "#64748b", display: "block" }}>
           Senior Designer — Acme Corporation
         </span>
-        <div style={{ color: "#64748b", marginTop: 6 }}>
-          ✉️ sarah@acmecorp.com | 🌐 acmecorp.com
-        </div>
+        <div style={{ color, marginTop: 6 }}>🌐 acmecorp.com</div>
       </div>
     ),
   },
@@ -76,7 +71,7 @@ const TEMPLATES = [
           {" | Senior Designer | Acme Corp"}
         </div>
         <div style={{ color: "#64748b" }}>
-          {"📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com"}
+          {"📞 +1 (555) 234‑5678 | 🌐 acmecorp.com"}
         </div>
       </div>
     ),
@@ -110,12 +105,31 @@ const TEMPLATES = [
             <td style={{ color: "#64748b" }}>Acme Corporation</td>
           </tr>
           <tr>
-            <td style={{ color: "#64748b" }}>
-              📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
-            </td>
+            <td style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</td>
           </tr>
         </tbody>
       </table>
+    ),
+  },
+  {
+    id: "modern",
+    name: "Modern",
+    label: "Photo + social icons",
+    color: "#7c3aed",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.6, display: "flex", gap: 10, alignItems: "flex-start" }}>
+        <div style={{ width: 44, height: 44, borderRadius: "50%", background: `linear-gradient(135deg, ${color}, ${color}cc)`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: "bold", fontSize: 15 }}>SC</div>
+        <div>
+          <strong style={{ color, display: "block" }}>Sarah Chen</strong>
+          <span style={{ color: "#64748b", display: "block" }}>Senior Designer · Acme</span>
+          <div style={{ color: "#64748b", marginTop: 2 }}>📞 +1 (555) 234‑5678</div>
+          <div style={{ marginTop: 4, display: "flex", gap: 5 }}>
+            <span style={{ fontSize: 10, color: "#0077b5", fontWeight: 700 }}>in</span>
+            <span style={{ fontSize: 10, color: "#e1306c", fontWeight: 700 }}>ig</span>
+            <span style={{ fontSize: 10, color }}>🌐</span>
+          </div>
+        </div>
+      </div>
     ),
   },
 ];
@@ -186,7 +200,7 @@ export default function TemplateCarousel() {
             Choose Your Template
           </h2>
           <p className="text-base sm:text-lg text-text-muted">
-            5 professional designs, ready to customize with your brand.
+            6 professional designs, ready to customize with your brand.
           </p>
         </div>
 

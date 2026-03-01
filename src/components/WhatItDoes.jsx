@@ -13,7 +13,7 @@ const BULLETS = [
   { icon: Zap,    label: "Live Preview",            desc: "See every change reflected instantly as you type." },
   { icon: Layers, label: "Multiple Templates",       desc: "5 professional layouts for any style or brand." },
   { icon: Palette,label: "Brand Color Customization",desc: "Pick any color to perfectly match your identity." },
-  { icon: Code2,  label: "One-Click HTML Export",   desc: "Clean HTML you can paste directly into Gmail or Outlook." },
+  { icon: Code2,  label: "One-Click Copy",   desc: "Copy your rendered signature and paste it directly into Gmail, Outlook, or Apple Mail." },
 ];
 
 function MiniPreview({ name, color, template, social }) {
@@ -24,7 +24,7 @@ function MiniPreview({ name, color, template, social }) {
           <strong style={{ color }}>{name}</strong>
           <span style={{ color: "#64748b" }}> · Senior Designer · Acme</span>
         </div>
-        <div style={{ color: "#64748b", marginTop: 3 }}>✉️ sarah@acmecorp.com</div>
+        <div style={{ color: "#64748b", marginTop: 3 }}>🌐 acmecorp.com</div>
         <AnimatePresence>
           {social && (
             <motion.div
@@ -47,7 +47,7 @@ function MiniPreview({ name, color, template, social }) {
       <span style={{ color: "#64748b", display: "block" }}>Acme Corporation</span>
       <div style={{ height: 1, background: color + "33", margin: "6px 0" }} />
       <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
-      <div style={{ color: "#64748b" }}>✉️ sarah@acmecorp.com</div>
+      <div style={{ color }}>🌐 acmecorp.com</div>
     </div>
   );
 }

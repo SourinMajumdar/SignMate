@@ -65,11 +65,18 @@ function MockSignatureCard({ color }) {
 }
 
 export default function HeroSection() {
-  const [activeColor, setActiveColor] = useState(PALETTE[0]);
+  const [activeColor, setActiveColor] = useState(() => {
+    const saved = localStorage.getItem("signmate_hero_color");
+    return PALETTE.find((p) => p.id === saved) ?? PALETTE[0];
+  });
+
+  // Apply theme on mount so CSS vars match the saved swatch
+  useState(() => { applyTheme(activeColor); });
 
   const handleColorSelect = (swatch) => {
     setActiveColor(swatch);
     applyTheme(swatch);
+    localStorage.setItem("signmate_hero_color", swatch.id);
   };
 
   return (
@@ -105,7 +112,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="text-base sm:text-xl text-text-muted leading-relaxed mb-8 sm:mb-10 max-w-lg">
-              Custom templates, brand colors, social links, and instant HTML export.
+              Custom templates, brand colors, photo uploads, social links - copy, paste, and done!
             </p>
 
             <div className="flex flex-wrap gap-3 mb-10 sm:mb-14">
@@ -126,7 +133,7 @@ export default function HeroSection() {
 
             {/* Trust strip */}
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-text-muted text-xs font-medium">
-              {["Works with Gmail", "Outlook ready", "5 templates"].map((t) => (
+              {["Works with Gmail", "Outlook ready", "Apple Mail ready", "6 templates"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
                   {t}
@@ -172,15 +179,12 @@ export default function HeroSection() {
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
                 className="absolute -bottom-4 -left-2 sm:-left-6 bg-surface rounded-xl border border-border-base shadow-sm px-3 py-2 text-xs font-semibold text-text-base"
               >
-                {"</>"} HTML Export
+                {"</>"} Copy Signature
               </motion.div>
             </div>
 
             {/* Color swatches */}
             <div className="bg-surface/80 backdrop-blur-sm border border-border-base rounded-2xl px-5 py-3.5 flex items-center gap-4">
-              <span className="text-sm font-semibold text-text-muted whitespace-nowrap">
-                Theme color
-              </span>
               <div className="flex items-center gap-2.5">
                 {PALETTE.map((swatch) => (
                   <motion.button

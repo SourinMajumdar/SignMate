@@ -28,7 +28,6 @@ const TEMPLATES = [
           style={{ height: 1, background: color + "30", margin: "8px 0" }}
         />
         <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
-        <div style={{ color: "#64748b" }}>✉️ sarah@acmecorp.com</div>
         <div style={{ color }}>🌐 acmecorp.com</div>
       </div>
     ),
@@ -45,9 +44,7 @@ const TEMPLATES = [
           <strong style={{ color }}>Sarah Chen</strong>
           <span style={{ color: "#64748b" }}> · Senior Designer · Acme</span>
         </div>
-        <div style={{ color: "#64748b" }}>
-          📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
-        </div>
+        <div style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</div>
         <div style={{ color }}>🌐 acmecorp.com</div>
       </div>
     ),
@@ -66,9 +63,7 @@ const TEMPLATES = [
         <span style={{ color: "#64748b", display: "block" }}>
           Senior Designer — Acme Corporation
         </span>
-        <div style={{ color: "#64748b", marginTop: 6 }}>
-          ✉️ sarah@acmecorp.com | 🌐 acmecorp.com
-        </div>
+        <div style={{ color, marginTop: 6 }}>🌐 acmecorp.com</div>
       </div>
     ),
   },
@@ -85,7 +80,7 @@ const TEMPLATES = [
           {" | Senior Designer | Acme Corp"}
         </div>
         <div style={{ color: "#64748b" }}>
-          {"📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com"}
+          {"📞 +1 (555) 234‑5678 | 🌐 acmecorp.com"}
         </div>
       </div>
     ),
@@ -120,12 +115,32 @@ const TEMPLATES = [
             <td style={{ color: "#64748b" }}>Acme Corporation</td>
           </tr>
           <tr>
-            <td style={{ color: "#64748b" }}>
-              📞 +1 (555) 234‑5678 | ✉️ sarah@acmecorp.com
-            </td>
+            <td style={{ color: "#64748b" }}>📞 +1 (555) 234‑5678</td>
           </tr>
         </tbody>
       </table>
+    ),
+  },
+  {
+    id: "modern",
+    name: "Modern",
+    label: "Photo + social icons",
+    desc: "Side-by-side photo and info with LinkedIn & Instagram icon links. Polished and email-safe.",
+    color: "#7c3aed",
+    preview: (color) => (
+      <div style={{ fontFamily: "Arial", fontSize: 13, lineHeight: 1.6, display: "flex", gap: 12, alignItems: "flex-start" }}>
+        <div style={{ width: 48, height: 48, borderRadius: "50%", background: `linear-gradient(135deg, ${color}, ${color}cc)`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: "bold", fontSize: 16 }}>SC</div>
+        <div>
+          <strong style={{ color, display: "block", fontSize: 14 }}>Sarah Chen</strong>
+          <span style={{ color: "#64748b", display: "block" }}>Senior Designer · Acme</span>
+          <div style={{ color: "#64748b", marginTop: 3 }}>📞 +1 (555) 234‑5678</div>
+          <div style={{ marginTop: 4, display: "flex", gap: 6 }}>
+            <span style={{ fontSize: 11, color: "#0077b5", fontWeight: 600 }}>in</span>
+            <span style={{ fontSize: 11, color: "#e1306c", fontWeight: 600 }}>ig</span>
+            <span style={{ fontSize: 11, color, fontWeight: 600 }}>🌐</span>
+          </div>
+        </div>
+      </div>
     ),
   },
 ];
@@ -141,7 +156,7 @@ export default function TemplatesPage() {
           {/* Header */}
           <div className="text-center mb-8 sm:mb-16">
             <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-sm font-bold px-5 py-2.5 rounded-full mb-5 sm:mb-6">
-              5 templates available
+              6 templates available
             </div>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-text-base tracking-tight mb-4 sm:mb-5">
               Template Gallery
