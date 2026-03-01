@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Zap, Palette, Copy, ShieldOff } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,44 +8,88 @@ import BackToTop from "../components/BackToTop";
 
 const STEPS = [
   { step: "01", title: "Open the Builder", desc: "Head to the Builder page. No account or login needed — it's ready instantly." },
-  { step: "02", title: "Enter Your Details", desc: "Fill in your name, job title, company, phone, email, and website in the form." },
-  { step: "03", title: "Pick a Template & Color", desc: "Choose from 5 layouts and pick a brand color using the color picker." },
-  { step: "04", title: "Copy Your HTML", desc: 'Click "Copy Signature HTML" to get the clean HTML and paste it into Gmail, Outlook, or any email client.' },
+  { step: "02", title: "Enter Your Details", desc: "Fill in your name, job title, company, phone, and website in the form. For the Modern template, upload a photo and add social links too." },
+  { step: "03", title: "Pick a Template & Color", desc: "Choose from 6 layouts and pick a brand color using the color picker." },
+  { step: "04", title: "Copy Your Signature", desc: 'Click "Copy Signature" to copy the rendered preview, then paste it directly into Gmail, Outlook, or Apple Mail with Ctrl+V.' },
 ];
 
 const TEMPLATES = [
-  { id: "classic", name: "Classic", desc: "Full name, title, company, contacts on separate rows. Traditional and universally readable." },
+  { id: "classic", name: "Classic", desc: "Full name, title, company, and phone/website on separate rows. Traditional and universally readable." },
   { id: "compact", name: "Compact", desc: "Name + title in one line, contacts on the next. Great for shorter signatures." },
-  { id: "minimal", name: "Minimal", desc: "Just name, role, and email/website. Best for mobile-first email clients." },
+  { id: "minimal", name: "Minimal", desc: "Just name, role, and website. Best for mobile-first email clients." },
   { id: "inline",  name: "Inline",  desc: "Everything on a single horizontal line. Ultra-condensed and modern." },
   { id: "card",    name: "Card",    desc: "Bordered table card with structured layout. Great for standing out." },
+  { id: "modern",  name: "Modern",  desc: "Photo, social icons (LinkedIn, Instagram), and a polished two-column layout. Fully email-safe." },
 ];
 
 const CLIENTS = [
-  { name: "Gmail", steps: ["Open Settings → See all settings", "Go to the Signature tab", "Create a new signature, paste the HTML using Ctrl+Shift+V"] },
-  { name: "Outlook", steps: ["Go to File → Options → Mail → Signatures", "Create a new signature", "Paste HTML in the editor"] },
-  { name: "Apple Mail", steps: ["Preferences → Signatures", "Add a new signature", "Paste HTML directly into the editor"] },
+  {
+    name: "Gmail",
+    iconSrc: "/icons/gmail.png",
+    // iconColor: "#EA4335",
+    quickUse: [
+      "Open Gmail and click Compose.",
+      "Click inside the email body where you want the signature.",
+      "Press Ctrl+V (Cmd+V on Mac) to paste.",
+    ],
+    permanent: [
+      "Open Settings → See all settings.",
+      "Go to the Signature tab and click Create new.",
+      "Click inside the signature editor and press Ctrl+V (Cmd+V) to paste.",
+      "Scroll down and click Save Changes.",
+    ],
+  },
+  {
+    name: "Outlook",
+    iconSrc: "/icons/outlook.png",
+    quickUse: [
+      "Open a new email and click inside the message body.",
+      "Press Ctrl+V to paste the signature.",
+    ],
+    permanent: [
+      "Go to File → Options → Mail → Signatures.",
+      "Click New, give the signature a name.",
+      "Click inside the editor area and press Ctrl+V to paste.",
+      "Click OK to save.",
+    ],
+  },
+  {
+    name: "Apple Mail",
+    iconSrc: "/icons/apple.png",
+    darken: true,
+    quickUse: [
+      "Open a new message in Apple Mail.",
+      "Click inside the email body and press Cmd+V to paste.",
+    ],
+    permanent: [
+      "Go to Mail → Settings → Signatures.",
+      "Select your account and click the + button.",
+      "Click inside the signature preview area and press Cmd+V to paste.",
+      "Close settings — the signature is saved automatically.",
+    ],
+  },
 ];
 
 const TIPS = [
   "Keep signatures concise — include only the most important contact info.",
   "Use your brand's primary color to keep signatures on-brand.",
   "Test your signature by sending a test email to yourself.",
-  "Use Paste as Plain Text (Ctrl+Shift+V) when pasting into email clients to avoid formatting issues.",
+  "Paste with Ctrl+V (not Ctrl+Shift+V) to preserve the rich-text formatting when inserting into Gmail or Outlook.",
   "The Minimal or Compact templates work best for mobile email clients.",
+  "For the Modern template, use the built-in crop tool to resize your photo — this keeps the signature size well under Gmail's character limit.",
 ];
 
 const FAQS = [
   { q: "Is SignMate free?", a: "Yes, completely free. No account, no subscription, no credit card." },
   { q: "Will the signature work in all email clients?", a: "The generated HTML uses table-based layout which works in Gmail, Outlook, Apple Mail, and most other clients." },
-  { q: "Can I add my own social links?", a: "Currently social links appear as plain text links. More social link options are coming soon." },
+  { q: "Can I add my own social links?", a: "Yes — the Modern template supports LinkedIn and Instagram icon links. Switch to Modern in the template picker to see the social fields." },
   { q: "Is my data stored anywhere?", a: "No. Everything stays in your browser — nothing is sent to a server." },
 ];
 
 const OVERVIEW_FEATURES = [
   { icon: Zap,      label: "Instant generation", desc: "Create a signature in under a minute — no design skills needed." },
   { icon: Palette,  label: "5 templates & custom color", desc: "Choose a layout and brand color that fits your style." },
-  { icon: Copy,     label: "Copy-ready HTML", desc: "Get clean HTML that drops straight into any email client." },
+  { icon: Copy,     label: "One-click copy", desc: "Copy the rendered signature and paste it straight into Gmail, Outlook, or Apple Mail." },
   { icon: ShieldOff, label: "Fully private", desc: "No data is sent to any server. Everything stays in your browser." },
 ];
 
@@ -89,7 +134,12 @@ export default function DocsPage() {
   return (
     <div className="min-h-screen bg-bg-base">
       <Navbar />
-      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="pt-24 sm:pt-28 pb-16 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-6"
+      >
         {/* Page header */}
         <div className="mb-8 sm:mb-14">
           <div className="inline-flex items-center gap-2 bg-primary-light text-primary text-sm font-bold px-4 py-2 rounded-full mb-5 sm:mb-6">
@@ -209,18 +259,48 @@ export default function DocsPage() {
 
             {/* Email Clients */}
             <Section id="email-clients" title="Adding to Email Clients">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {CLIENTS.map(({ name, steps }) => (
+              <p className="text-text-muted mb-6 leading-relaxed">
+                There are two ways to use your signature — paste it into a single email on the spot, or save it as a permanent signature that auto-appends to every message.
+              </p>
+              <div className="space-y-5">
+                {CLIENTS.map(({ name, iconSrc, darken, quickUse, permanent }) => (
                   <div key={name} className="bg-surface rounded-2xl border border-border-base p-7">
-                    <h3 className="font-extrabold text-text-base text-lg mb-5">{name}</h3>
-                    <ol className="space-y-3">
-                      {steps.map((s, i) => (
-                        <li key={i} className="flex gap-3 text-text-muted leading-relaxed">
-                          <span className="font-bold text-primary shrink-0">{i + 1}.</span>
-                          {s}
-                        </li>
-                      ))}
-                    </ol>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-bg-base border border-border-base">
+                        <img src={iconSrc} alt={name} width={20} height={20} style={{ width: 20, height: 20, objectFit: "contain", filter: darken ? "brightness(0.55)" : "none" }} />
+                      </div>
+                      <h3 className="font-extrabold text-text-base text-xl">{name}</h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {/* Quick use */}
+                      <div>
+                        <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-3">
+                          Quick use — paste in email body
+                        </p>
+                        <ol className="space-y-2.5">
+                          {quickUse.map((s, i) => (
+                            <li key={i} className="flex gap-3 text-text-muted text-sm leading-relaxed">
+                              <span className="font-bold text-primary shrink-0">{i + 1}.</span>
+                              {s}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                      {/* Permanent */}
+                      <div>
+                        <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-3">
+                          Permanent — save as signature
+                        </p>
+                        <ol className="space-y-2.5">
+                          {permanent.map((s, i) => (
+                            <li key={i} className="flex gap-3 text-text-muted text-sm leading-relaxed">
+                              <span className="font-bold text-primary shrink-0">{i + 1}.</span>
+                              {s}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -252,7 +332,7 @@ export default function DocsPage() {
 
           </div>
         </div>
-      </div>
+      </motion.div>
       <Footer />
       <BackToTop />
     </div>
