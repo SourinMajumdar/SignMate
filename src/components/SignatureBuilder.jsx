@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import SignatureForm from "./SignatureForm";
 import SignaturePreview from "./SignaturePreview";
 import { generateSignatureHTML } from "../utils/generateSignatureHTML";
-import { Copy, Check, Pipette, Trash2, Code, Eye, PenLine } from "lucide-react";
+import { Copy, Check, Pipette, Trash2, Code, Eye, PenLine, X } from "lucide-react";
+
+const CLIENT_COMPAT = [
+  { name: "Gmail",       supported: true  },
+  { name: "Outlook",     supported: true  },
+  { name: "Apple Mail",  supported: true  },
+];
 
 const PRESET_COLORS = [
   "#2563eb", "#7c3aed", "#e11d48", "#059669",
@@ -15,9 +21,21 @@ const TEMPLATES = [
   { id: "minimal", label: "Minimal" },
   { id: "inline",  label: "Inline"  },
   { id: "card",    label: "Card"    },
+  { id: "modern",  label: "Modern"  },
 ];
 
-const EMPTY_DATA = { name: "", title: "", company: "", phone: "", email: "", website: "" };
+const EMPTY_DATA = {
+  name: "",
+  title: "",
+  company: "",
+  phone: "",
+  website: "",
+  photo: "",
+  photoRaw: "",
+  photoShape: "circle",
+  linkedin: "",
+  instagram: "",
+};
 
 function ColorPicker({ value, onChange }) {
   const isCustom = !PRESET_COLORS.includes(value.toLowerCase());
@@ -78,17 +96,35 @@ function SectionLabel({ children }) {
 export default function SignatureBuilder({ defaultTemplate = "classic" }) {
   const [data, setData] = useState(EMPTY_DATA);
   const [template, setTemplate] = useState(defaultTemplate);
-  const [primaryColor, setPrimaryColor] = useState("#2563eb");
-  const [copied, setCopied] = useState(false);
+  const [primaryColor, setPrimaryColor] = useState(
+    () => localStorage.getItem("signmate_color") ?? "#2563eb"
+  );
+
+  function handleColorChange(color) {
+    setPrimaryColor(color);
+    localStorage.setItem("signmate_color", color);
+  }
+  const [copied, setCopied] = useState(false);   // false | "copied" | "error"
   const [view, setView] = useState("preview"); // "preview" | "html"
   const [mobileTab, setMobileTab] = useState("form"); // "form" | "preview"
+  const previewRef = useRef(null);
 
   const html = generateSignatureHTML(data, template, primaryColor);
 
   function copyToClipboard() {
-    navigator.clipboard.writeText(html);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    const el = previewRef.current;
+    let ok = false;
+    try {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      ok = document.execCommand("copy");
+      selection.removeAllRanges();
+    } catch { /* ignored */ }
+    setCopied(ok ? "copied" : "error");
+    setTimeout(() => setCopied(false), ok ? 2000 : 3000);
   }
 
   return (
@@ -131,7 +167,7 @@ export default function SignatureBuilder({ defaultTemplate = "classic" }) {
           {/* Brand Color */}
           <div className="space-y-4">
             <SectionLabel>Brand Color</SectionLabel>
-            <ColorPicker value={primaryColor} onChange={setPrimaryColor} />
+            <ColorPicker value={primaryColor} onChange={handleColorChange} />
           </div>
 
           <div className="h-px bg-border-base" />
@@ -171,7 +207,7 @@ export default function SignatureBuilder({ defaultTemplate = "classic" }) {
                 Clear
               </button>
             </div>
-            <SignatureForm data={data} setData={setData} />
+            <SignatureForm data={data} setData={setData} template={template} primaryColor={primaryColor} />
           </div>
 
           {/* Mobile: copy button inside form panel */}
@@ -181,7 +217,7 @@ export default function SignatureBuilder({ defaultTemplate = "classic" }) {
               className="w-full flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl font-semibold text-white text-sm shadow-sm transition-all active:scale-95 hover:opacity-90"
               style={{ backgroundColor: primaryColor }}
             >
-              {copied ? <><Check size={16} /> Copied!</> : <><Copy size={16} /> Copy Signature HTML</>}
+              {copied === "copied" ? <><Check size={16} /> Copied!</> : copied === "error" ? <><X size={16} /> Copy failed</> : <><Copy size={16} /> Copy Signature</>}
             </button>
           </div>
         </div>
@@ -229,7 +265,7 @@ export default function SignatureBuilder({ defaultTemplate = "classic" }) {
         <div className="flex-1 overflow-auto p-5 sm:p-8">
           <div className="flex flex-col gap-4">
             {view === "preview" ? (
-              <div className="bg-surface rounded-xl border border-border-base p-5 sm:p-8">
+              <div ref={previewRef} className="bg-surface rounded-xl border border-border-base p-5 sm:p-8">
                 <SignaturePreview data={data} template={template} color={primaryColor} />
               </div>
             ) : (
@@ -238,21 +274,46 @@ export default function SignatureBuilder({ defaultTemplate = "classic" }) {
               </pre>
             )}
 
-            {/* Copy button */}
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <p className="text-sm text-text-muted">
-                {Object.values(data).some(Boolean)
-                  ? "Your signature is ready to copy"
-                  : "Fill in your details to generate a signature"}
-              </p>
-              <button
-                onClick={copyToClipboard}
-                className="flex items-center gap-2.5 px-7 py-3 rounded-xl font-semibold text-white text-sm shadow-sm transition-all active:scale-95 hover:opacity-90"
-                style={{ backgroundColor: primaryColor }}
-              >
-                {copied ? <><Check size={16} /> Copied!</> : <><Copy size={16} /> Copy Signature HTML</>}
-              </button>
-            </div>
+            {/* Compatibility badges — only shown in preview mode */}
+            {view === "preview" && (
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-semibold text-text-muted uppercase tracking-widest shrink-0">Works in</span>
+                {CLIENT_COMPAT.map(({ name, supported }) => (
+                  <span
+                    key={name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border"
+                    style={
+                      supported
+                        ? { backgroundColor: `${primaryColor}18`, color: primaryColor, borderColor: `${primaryColor}40` }
+                        : { backgroundColor: "var(--bg-base)", color: "var(--text-muted)", borderColor: "var(--border-base)" }
+                    }
+                  >
+                    <span style={{ fontSize: 9, lineHeight: 1 }}>
+                      {supported ? "✔" : "✖"}
+                    </span>
+                    {name}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Copy button — only shown in preview mode */}
+            {view === "preview" && (
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <p className="text-sm text-text-muted">
+                  {Object.values(data).some(Boolean)
+                    ? "Paste directly into your email compose window"
+                    : "Fill in your details to generate a signature"}
+                </p>
+                <button
+                  onClick={copyToClipboard}
+                  className="flex items-center gap-2.5 px-7 py-3 rounded-xl font-semibold text-white text-sm shadow-sm transition-all active:scale-95 hover:opacity-90"
+                  style={{ backgroundColor: copied === "error" ? "#e11d48" : primaryColor }}
+                >
+                  {copied === "copied" ? <><Check size={16} /> Copied!</> : copied === "error" ? <><X size={16} /> Copy failed</> : <><Copy size={16} /> Copy Signature</>}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
