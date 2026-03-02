@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Instagram, Linkedin, Globe } from "lucide-react";
 
 const TEMPLATES = [
   {
@@ -124,9 +124,9 @@ const TEMPLATES = [
           <span style={{ color: "#64748b", display: "block" }}>Senior Designer · Acme</span>
           <div style={{ color: "#64748b", marginTop: 2 }}>📞 +1 (555) 234‑5678</div>
           <div style={{ marginTop: 4, display: "flex", gap: 5 }}>
-            <span style={{ fontSize: 10, color: "#0077b5", fontWeight: 700 }}>in</span>
-            <span style={{ fontSize: 10, color: "#e1306c", fontWeight: 700 }}>ig</span>
-            <span style={{ fontSize: 10, color }}>🌐</span>
+            <Globe size={12} color="#64748b" />
+            <Linkedin size={12} color="#0077b5" />
+            <Instagram size={12} color="#e1306c" />
           </div>
         </div>
       </div>
